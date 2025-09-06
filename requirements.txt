@@ -8,3 +8,4 @@ langchain-groq
 PyPDF2
 sentence-transformers
 pypdf
+requests
