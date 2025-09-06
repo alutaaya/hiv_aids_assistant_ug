@@ -2,6 +2,7 @@
 # Streamlit version of the HIV/AIDS Assistant for local machine
 
 import os
+import requests
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
@@ -13,11 +14,21 @@ from dotenv import load_dotenv
 # Load environment variables (for API keys, etc.)
 load_dotenv()
 
-st.set_page_config(page_title="Uganda HIV/AIDS Assistant", layout="wide")
+
 
 # --- 1. Load or Create the Vector Store with Caching ---
+PDF_URL = "https://drive.google.com/file/d/1rY_UE-sIw4f5Z5VUt0pyllPs7tSENsSr/view?usp=drive_link"
 PDF_PATH = "Consolidated-HIV-and-AIDS-Guidelines-2022.pdf"
 FAISS_INDEX_PATH = "faiss_index"
+
+if not os.path.exists(PDF_PATH):
+    st.info("Downloading PDF…")
+    r = requests.get(PDF_URL)
+    with open(PDF_PATH, "wb") as f:
+        f.write(r.content)
+    st.success("PDF downloaded successfully!")
+
+st.set_page_config(page_title="Uganda HIV/AIDS Assistant", layout="wide")
 
 @st.cache_resource
 def load_embeddings():
