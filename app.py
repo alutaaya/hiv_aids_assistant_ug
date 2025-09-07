@@ -73,6 +73,11 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
+    api_key = st.text_input("Enter your GROQ API Key", type="password")
+
+    if api_key:
+        os.environ["groq_api"] = api_key  # set it so rest of code can use it
+        st.success("API Key set successfully ✅")
     groq_api = os.getenv("groq_api", "").strip()
     if not groq_api:
         st.error("❌ ERROR: groq_api not found. Please set it in your .env file.")
