@@ -73,14 +73,14 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
-    if not GROQ_API_KEY:
-        st.error("❌ ERROR: GROQ_API_KEY not found. Please set it in your .env file.")
+    groq_api = os.getenv("groq_api", "").strip()
+    if not groq_api:
+        st.error("❌ ERROR: groq_api not found. Please set it in your .env file.")
         return None
     return ChatGroq(
         model_name="llama-3.1-70b-versatile",
         temperature=0,
-        api_key=GROQ_API_KEY
+        api_key=groq_api
     )
 
 # --- 4. Core Functions ---
