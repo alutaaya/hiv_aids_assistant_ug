@@ -45,6 +45,12 @@ if not os.path.exists(PDF_PATH):
 # --- 2. Streamlit Page Config ---
 st.set_page_config(page_title="Uganda HIV/AIDS Assistant", layout="wide")
 
+ api_key = st.text_input("Enter your GROQ API Key", type="password")
+
+    if api_key:
+        os.environ["groq_api"] = api_key  # set it so rest of code can use it
+        st.success("API Key set successfully ✅")
+
 # --- 3. Load or Create Resources with Caching ---
 @st.cache_resource
 def load_embeddings():
@@ -73,11 +79,6 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
-    api_key = st.text_input("Enter your GROQ API Key", type="password")
-
-    if api_key:
-        os.environ["groq_api"] = api_key  # set it so rest of code can use it
-        st.success("API Key set successfully ✅")
     groq_api = os.getenv("groq_api", "").strip()
     if not groq_api:
         st.error("❌ ERROR: groq_api not found. Please set it in your .env file.")
