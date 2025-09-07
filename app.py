@@ -82,7 +82,7 @@ def load_llm():
         return None
 
     return ChatGroq(
-        model_name="llama-3.1-70b-versatile",
+        model_name="openai/gpt-oss-120b",
         temperature=0,
         api_key=groq_api
     )
