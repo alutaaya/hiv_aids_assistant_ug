@@ -74,7 +74,7 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
-    groq_api = os.getenv("groq_api", "").strip()
+    groq_api = st.secrets["groq_api"]
     if not groq_api:
         st.error("❌ ERROR: groq_api not found. Please set it in your .env file.")
         return None
