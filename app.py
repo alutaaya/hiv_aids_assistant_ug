@@ -113,7 +113,7 @@ def answer_query(query, llm, vectorstore):
 
 # --- 5. Streamlit UI ---
 def main():
-    st.title("🇺🇬 Uganda HIV/AIDS Assistant Chatbot")
+    st.title("Uganda HIV/AIDS Assistant Chatbot")
     st.write("Built by **Alfred Lutaaya** | Based on *Consolidated HIV and AIDS Guidelines 2022*.")
 
     vectorstore = load_vectorstore()
