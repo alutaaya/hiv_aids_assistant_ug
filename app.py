@@ -11,7 +11,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_groq import ChatGroq
 
-# --- 0. Load environment variables ---
+# --- 0. Load environment variables (for local dev) ---
 load_dotenv()
 
 # --- 1. PDF Download from Google Drive ---
@@ -74,10 +74,13 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
-    groq_api = st.secrets["groq_api"]
+    # ✅ safer access to secrets
+    groq_api = st.secrets.get("groq_api") or os.getenv("groq_api")
+
     if not groq_api:
-        st.error("❌ ERROR: groq_api not found. Please set it in your .env file.")
+        st.error("❌ ERROR: groq_api not found. Please set it in Streamlit secrets or .env file.")
         return None
+
     return ChatGroq(
         model_name="llama-3.1-70b-versatile",
         temperature=0,
@@ -116,6 +119,9 @@ def answer_query(query, llm, vectorstore):
 def main():
     st.title("Uganda HIV/AIDS Assistant Chatbot")
     st.write("Built by **Alfred Lutaaya** | Based on *Consolidated HIV and AIDS Guidelines 2022*.")
+
+    # ✅ debug: see which secrets are available
+    st.write("DEBUG: Available secrets →", list(st.secrets.keys()))
 
     vectorstore = load_vectorstore()
     llm = load_llm()
