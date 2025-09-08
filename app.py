@@ -49,7 +49,7 @@ st.set_page_config(page_title="Uganda HIV/AIDS Assistant", layout="wide")
 # --- 3. Load or Create Resources with Caching ---
 @st.cache_resource
 def load_embeddings():
-    return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    return HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
 @st.cache_resource
 def load_vectorstore():
