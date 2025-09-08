@@ -90,7 +90,7 @@ def load_llm():
 # --- 4. Core Functions ---
 def retrieve_relevant_chunks(query, vectorstore):
     if vectorstore:
-        return vectorstore.similarity_search(query, k=4)
+        return vectorstore.similarity_search(query, k=12)
     return []
 
 def answer_query(query, llm, vectorstore):
